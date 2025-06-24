@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: transparent;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .clock {
+            font-size: 8rem;
+            font-weight: 700;
+            color: #f9f9f9;
+        }
+
+        .info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .date {
+            font-size: 2rem;
+            font-weight: 400;
+            color: #f9f9f9;
+            margin-right: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .clock {
+                font-size: 6rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .clock {
+                font-size: 4rem;
+            }
+
+            .date, .weather-widget, .temperature, .weather-icon {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="clock" id="clock"></div>
+        <div class="info">
+            <div class="date" id="date"></div>
+        </div>
+    </div>
+
+    <script>
+        function updateClockAndDate() {
+            const clockElement = document.getElementById('clock');
+            const dateElement = document.getElementById('date');
+            const now = new Date();
+            
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            clockElement.textContent = `${hours}:${minutes}:${seconds}`;
+            
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            dateElement.textContent = now.toLocaleDateString(undefined, options);
+        }
+
+        setInterval(updateClockAndDate, 1000);
+        updateClockAndDate();
+    </script>
+</body>
+</html>
