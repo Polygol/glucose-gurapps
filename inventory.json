@@ -4,7 +4,7 @@
         {
             "id": "ticker",
             "name": "Ticker",
-            "developer": "kirbIndustries, Monos Corporation",
+            "developer": "Monos Corporation",
             "category": "Tools",
             "iconUrl": "/glucose-gurapps/ticker/ticker.png",
             "url": "/glucose-gurapps/ticker/ticker.html",
