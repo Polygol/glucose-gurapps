@@ -1,8 +1,8 @@
 "+readme_inventory_details+": "kirbIndustries: Glucose",
 [
     {
-        "id": "Ticker",
-        "name": "Chronos",
+        "id": "ticker",
+        "name": "Ticker",
         "developer": "kirbIndustries",
         "category": "Tools",
         "iconUrl": "/glucose-gurapps/ticker/ticker.png",
