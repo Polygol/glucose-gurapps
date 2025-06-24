@@ -1,5 +1,5 @@
 {
-    "+readme_inventory_details+": "kirbIndustries: Glucose",
+    "+readme_inventory_details": "kirbIndustries: Glucose",
     "apps": [
         {
             "id": "ticker",
