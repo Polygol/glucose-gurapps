@@ -68,6 +68,9 @@
     </div>
 
     <script>
+const bcpMap = { EN: 'en-US', JP: 'ja-JP', KO: 'ko-KR', ZH: 'zh-CN' };
+window.bcpMap = bcpMap;
+
 function getAppLanguage() {
     let l = (localStorage.getItem('language') || localStorage.getItem('selectedLanguage') || 'EN').toUpperCase();
     if (l === 'JA') l = 'JP';
@@ -75,9 +78,22 @@ function getAppLanguage() {
 }
 
 function getLocaleBcp() {
-    const bcpMap = { EN: 'en-US', JP: 'ja-JP', KO: 'ko-KR', ZH: 'zh-CN' };
-    return bcpMap[getAppLanguage()] || 'en-US';
+    return (window.bcpMap && window.bcpMap[getAppLanguage()]) || 'en-US';
 }
+
+function updateClockAndDate() {
+    const now = new Date();
+    const clockEl = document.getElementById('clock');
+    const dateEl = document.getElementById('date');
+    const locale = getLocaleBcp();
+    if (clockEl) {
+        clockEl.textContent = now.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    }
+    if (dateEl) {
+        dateEl.textContent = now.toLocaleDateString(locale, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    }
+}
+setInterval(updateClockAndDate, 1000);
 
 function t(key, params = {}) {
     const lang = getAppLanguage();
