@@ -6,9 +6,9 @@
             "name": "Ticker",
             "developer": "Monos Corporation",
             "category": "Tools",
-            "iconUrl": "./glucose-gurapps/ticker/ticker.png",
-            "url": "./glucose-gurapps/ticker/ticker.html",
-            "filesToCache": ["./glucose-gurapps/ticker/ticker.html", "./glucose-gurapps/ticker/ticker.png"]
+            "iconUrl": "./glucose-polygolapps/ticker/ticker.png",
+            "url": "./glucose-polygolapps/ticker/ticker.html",
+            "filesToCache": ["./glucose-polygolapps/ticker/ticker.html", "./glucose-polygolapps/ticker/ticker.png"]
         }
     ]
 }

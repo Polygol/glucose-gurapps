@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Ticker</title>
-    <link rel="icon" href="./glucose-gurapps/ticker/ticker.png" type="image/png">
+    <title data-lang-key="TITLE">Ticker</title>
+    <link rel="icon" href="./glucose-polygolapps/ticker/ticker.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/gh/Polygol/polygol.github.io@main/assets/gurapp/api/gurasuraisu-api.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/gh/Polygol/polygol.github.io@main/assets/polygolapp/api/polygol-api.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         body {
@@ -57,6 +57,7 @@
             }
         }
     </style>
+    <script src="lang.js"></script>
 </head>
 <body>
     <div class="container">
@@ -78,11 +79,55 @@
             clockElement.textContent = `${hours}:${minutes}:${seconds}`;
             
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            dateElement.textContent = now.toLocaleDateString(undefined, options);
+            dateElement.textContent = now.toLocaleDateString(getLocaleBcp(), options);
         }
 
         setInterval(updateClockAndDate, 1000);
         updateClockAndDate();
     </script>
+<script>
+function getAppLanguage() {
+    let l = (localStorage.getItem('language') || localStorage.getItem('selectedLanguage') || 'EN').toUpperCase();
+    if (l === 'JA') l = 'JP';
+    return ['EN', 'JP', 'KO', 'ZH'].includes(l) ? l : 'EN';
+}
+
+function getLocaleBcp() {
+    const bcpMap = { EN: 'en-US', JP: 'ja-JP', KO: 'ko-KR', ZH: 'zh-CN' };
+    return bcpMap[getAppLanguage()] || 'en-US';
+}
+
+function t(key, params = {}) {
+    const lang = getAppLanguage();
+    const dict = window['LANG_' + lang + '_TICKER'] || window['LANG_EN_TICKER'] || {};
+    let str = dict[key] || key;
+    Object.keys(params).forEach(p => str = str.replace(new RegExp('\\{' + p + '\\}', 'g'), params[p]));
+    return str;
+}
+
+function applyLanguage(langCode) {
+    if (langCode) localStorage.setItem('language', langCode);
+    const lang = getAppLanguage();
+    document.documentElement.lang = getLocaleBcp();
+    
+    document.querySelectorAll('[data-lang-key]').forEach(el => {
+        const k = el.getAttribute('data-lang-key');
+        if (k) {
+            if (el.tagName === 'TITLE') document.title = t(k);
+            else el.textContent = t(k);
+        }
+    });
+    
+    if (typeof updateClockAndDate === 'function') updateClockAndDate();
+}
+
+window.addEventListener('message', (e) => {
+    if (e.data && (e.data.type === 'languageUpdate' || e.data.type === 'localeUpdate')) {
+        applyLanguage(e.data.languageCode);
+    }
+});
+
+window.addEventListener('DOMContentLoaded', () => applyLanguage());
+</script>
 </body>
 </html>
