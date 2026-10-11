@@ -102,6 +102,8 @@ function t(key, params = {}) {
     Object.keys(params).forEach(p => str = str.replace(new RegExp('\\{' + p + '\\}', 'g'), params[p]));
     return str;
 }
+window.t = t;
+window.getAppLanguage = getAppLanguage;
 
 function applyLanguage(langCode) {
     if (langCode) localStorage.setItem('language', langCode);
