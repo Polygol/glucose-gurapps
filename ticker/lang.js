@@ -1,16 +1,21 @@
 // Polygol Ticker Language Dictionary
-const LANG_EN_TICKER = {
+window.LANG_EN_TICKER = {
     TITLE: "Ticker"
 };
 
-const LANG_JP_TICKER = {
+window.LANG_JP_TICKER = {
     TITLE: "ティッカー"
 };
 
-const LANG_KO_TICKER = {
+window.LANG_KO_TICKER = {
     TITLE: "티커"
 };
 
-const LANG_ZH_TICKER = {
+window.LANG_ZH_TICKER = {
     TITLE: "时钟"
 };
+
+var LANG_EN_TICKER = window.LANG_EN_TICKER;
+var LANG_JP_TICKER = window.LANG_JP_TICKER;
+var LANG_KO_TICKER = window.LANG_KO_TICKER;
+var LANG_ZH_TICKER = window.LANG_ZH_TICKER;

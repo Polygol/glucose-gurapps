@@ -68,24 +68,6 @@
     </div>
 
     <script>
-        function updateClockAndDate() {
-            const clockElement = document.getElementById('clock');
-            const dateElement = document.getElementById('date');
-            const now = new Date();
-            
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            clockElement.textContent = `${hours}:${minutes}:${seconds}`;
-            
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            dateElement.textContent = now.toLocaleDateString(getLocaleBcp(), options);
-        }
-
-        setInterval(updateClockAndDate, 1000);
-        updateClockAndDate();
-    </script>
-<script>
 function getAppLanguage() {
     let l = (localStorage.getItem('language') || localStorage.getItem('selectedLanguage') || 'EN').toUpperCase();
     if (l === 'JA') l = 'JP';
@@ -108,7 +90,8 @@ function t(key, params = {}) {
 function applyLanguage(langCode) {
     if (langCode) localStorage.setItem('language', langCode);
     const lang = getAppLanguage();
-    document.documentElement.lang = getLocaleBcp();
+    const bcpMap = { EN: 'en-US', JP: 'ja-JP', KO: 'ko-KR', ZH: 'zh-CN' };
+    document.documentElement.lang = bcpMap[lang] || 'en-US';
     
     document.querySelectorAll('[data-lang-key]').forEach(el => {
         const k = el.getAttribute('data-lang-key');
@@ -117,13 +100,21 @@ function applyLanguage(langCode) {
             else el.textContent = t(k);
         }
     });
-    
-    if (typeof updateClockAndDate === 'function') updateClockAndDate();
+
+    if (typeof updateClockAndDate === 'function') {
+        updateClockAndDate();
+    }
 }
 
 window.addEventListener('message', (e) => {
     if (e.data && (e.data.type === 'languageUpdate' || e.data.type === 'localeUpdate')) {
         applyLanguage(e.data.languageCode);
+    }
+});
+
+window.addEventListener('storage', (e) => {
+    if (e.key === 'language' || e.key === 'selectedLanguage') {
+        applyLanguage(e.newValue);
     }
 });
 
